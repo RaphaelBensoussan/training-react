@@ -1,4 +1,4 @@
-name: React CI/CD
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
@@ -6,25 +6,24 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
+      # Checkout the code
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      # Set up Node.js
+      # Set up Node.js (choisir la version appropriée)
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: '16'  # Choisir la version Node.js souhaitée
 
       # Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # Run tests
       - name: Run tests
         run: npm test
 
@@ -32,17 +31,9 @@ jobs:
       - name: Build the project
         run: npm run build
 
-      # Configure Git
-      - name: Configure Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: build
-          publish_branch: gh-pages
-          force_orphan: true
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # Utilisation du token GitHub pour déployer
+          publish_dir: ./build  # Dossier où se trouve l'application construite
