@@ -24,14 +24,25 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      # Run tests
+      - name: Run tests
+        run: npm test
+
       # Build the project
       - name: Build the project
         run: npm run build
 
-      # Configure GitHub Pages (ensure gh-pages branch exists)
+      # Configure Git
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: build
-          publish_branch: gh-pages # Branche cible pour GitHub Pages
+          publish_branch: gh-pages
+          force_orphan: true
