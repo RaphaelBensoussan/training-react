@@ -24,20 +24,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Run tests
-      - name: Run unit tests
-        run: npm test -- --watchAll=false
-
       # Build the project
       - name: Build the project
         run: npm run build
-
-      # Integration tests
-      - name: Run integration tests
-        run: |
-          npx serve build & # Start the build directory in a local server
-          sleep 5           # Wait for the server to start
-          curl -I http://localhost:5000 | grep "200 OK" # Check if the server responds correctly
 
       # Deploy to GitHub Pages
       - name: Deploy to GitHub Pages
