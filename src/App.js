@@ -17,6 +17,10 @@ function App() {
         >
           Learn React
         </a>
+
+        <div>
+          Raphaël Bensoussan
+        </div>
       </header>
     </div>
   );
